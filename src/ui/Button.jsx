@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 const sizes = {
   small: css`
@@ -47,3 +47,22 @@ const variations = {
     }
   `,
 };
+
+const Button = styled.button`
+  font-size: 1.4rem;
+  font-weight: 600;
+  padding: 1.2rem 1.6rem;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-sm);
+
+  color: var(--color-brand-50);
+  background-color: var(--color-brand-500);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-brand-600);
+  }
+`;
+
+export default Button;
