@@ -3,12 +3,10 @@ import GlobalStyles from './styles/globalStyles';
 import Button from './ui/Button';
 import Input from './ui/Input';
 import Heading from './ui/Heading';
+import Row from './ui/Row';
 
 const StyledApp = styled.div`
-  text-align: center;
-  margin-top: 50px;
-  padding-bottom: 20px;
-  background-color: #001514;
+  padding: 20px;
 `;
 
 function App() {
@@ -16,12 +14,27 @@ function App() {
     <>
       <GlobalStyles />
       <StyledApp>
-        <Heading as='h1'>The Wild Oasis</Heading>
-        <Heading as='h2'>The Wild Oasis</Heading>
-        <Button onClick={() => alert('Checked in!')}>Check in</Button>
-        <Button onClick={() => alert('Checked out!')}>Check out</Button>
-        <Heading as='h3'>The Wild Oasis</Heading>
-        <Input type='text' placeholder='Search...' />
+        <Row type='vertical'>
+          <Row type='horizontal'>
+            <Heading as='h1'>The Wild Oasis</Heading>
+
+            <div>
+              <Heading as='h2'>Check in and out</Heading>
+              <Button onClick={() => alert('Checked in!')}>Check in</Button>
+              <Button variation='secondary' size='small' onClick={() => alert('Checked out!')}>
+                Check out
+              </Button>
+            </div>
+          </Row>
+
+          <Row type='vertical'>
+            <form>
+              <Heading as='h3'>Form</Heading>
+              <Input type='text' placeholder='Search...' />
+              <Input type='text' placeholder='Search...' />
+            </form>
+          </Row>
+        </Row>
       </StyledApp>
     </>
   );
