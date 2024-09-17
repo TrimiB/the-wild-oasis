@@ -31,6 +31,11 @@ const TableHeader = styled.header`
 `;
 
 function CabinTable() {
+  /**
+   * Fetches the list of cabins from the API and stores the result in the `cabins` state variable.
+   * The `isLoading` state variable indicates whether the data is currently being fetched.
+   * The `error` state variable will contain any errors that occurred during the fetch.
+   */
   const { data: cabins, isLoading, error } = useQuery({ queryKey: ['cabins'], queryFn: getCabins });
 
   if (isLoading) return <Spinner />;
