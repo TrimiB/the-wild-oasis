@@ -9,7 +9,6 @@ import Spinner from '../../ui/Spinner';
 
 function BookingTable() {
   const { bookings, isLoading } = useBookings();
-  console.log(bookings);
 
   if (isLoading) return <Spinner />;
 
@@ -29,7 +28,12 @@ function BookingTable() {
 
         <Table.Body
           data={bookings}
-          render={(booking) => <BookingRow key={booking.id} booking={booking} />}
+          render={(booking) => (
+            <BookingRow
+              key={booking.id}
+              booking={booking}
+            />
+          )}
         />
       </Table>
     </Menus>
