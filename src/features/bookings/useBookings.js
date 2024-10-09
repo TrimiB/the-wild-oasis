@@ -1,17 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import { getBookings } from '../../services/apiBookings';
+import { useSearchParams } from 'react-router-dom';
 
 export function useBookings() {
-  /**
-   * Fetches the list of cabins from the API and stores the result in the `cabins` state variable.
-   * The `isLoading` state variable indicates whether the data is currently being fetched.
-   * The `error` state variable will contain any errors that occurred during the fetch.
-   */
+  const [searchParams] = useSearchParams();
+  const filterValue = searchParams.get('status');
+  const filter =
+    !filterValue || filterValue === 'all'
+      ? null
+      : { field: 'status', value: filterValue };
+
   const {
     data: bookings,
     isLoading,
     error,
-  } = useQuery({ queryKey: ['bookings'], queryFn: getBookings });
+  } = useQuery({
+    queryKey: ['bookings', filter],
+    queryFn: () => getBookings({ filter }),
+  });
 
   return { bookings, isLoading, error };
 }
