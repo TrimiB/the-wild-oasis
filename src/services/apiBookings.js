@@ -9,7 +9,11 @@ export async function getBookings({ filter, sortBy, page }) {
     );
 
   // Filter
-  if (filter !== null) query[filter.method || 'eq'](filter.field, filter.value);
+  if (filter) query[filter.method || 'eq'](filter.field, filter.value);
+
+  // Sort
+  if (sortBy)
+    query.order(sortBy.field, { ascending: sortBy.direction === 'asc' });
 
   const { data, error } = await query;
 
@@ -52,7 +56,7 @@ export async function getBookingsAfterDate(date) {
   return data;
 }
 
-// Returns all STAYS that are were created after the given date
+// Returns all STATUS that are were created after the given date
 export async function getStaysAfterDate(date) {
   const { data, error } = await supabase
     .from('bookings')
