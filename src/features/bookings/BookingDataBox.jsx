@@ -78,7 +78,8 @@ const Price = styled.div`
 
   background-color: ${(props) =>
     props.isPaid ? 'var(--color-green-100)' : 'var(--color-yellow-100)'};
-  color: ${(props) => (props.isPaid ? 'var(--color-green-700)' : 'var(--color-yellow-700)')};
+  color: ${(props) =>
+    props.isPaid ? 'var(--color-green-700)' : 'var(--color-yellow-700)'};
 
   & p:last-child {
     text-transform: uppercase;
@@ -114,7 +115,13 @@ function BookingDataBox({ booking }) {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
+    guests: {
+      fullName: guestName,
+      email,
+      nationality,
+      countryFlag,
+      nationalID,
+    },
     cabins: { name: cabinName },
   } = booking;
 
@@ -130,8 +137,10 @@ function BookingDataBox({ booking }) {
 
         <p>
           {format(new Date(startDate), 'EEE, MMM dd yyyy')} (
-          {isToday(new Date(startDate)) ? 'Today' : formatDistanceFromNow(startDate)}) &mdash;{' '}
-          {format(new Date(endDate), 'EEE, MMM dd yyyy')}
+          {isToday(new Date(startDate))
+            ? 'Today'
+            : formatDistanceFromNow(startDate)}
+          ) &mdash; {format(new Date(endDate), 'EEE, MMM dd yyyy')}
         </p>
       </Header>
 
@@ -140,7 +149,7 @@ function BookingDataBox({ booking }) {
           {countryFlag && (
             <Flag
               src={countryFlag}
-              alt={`Flag of ${country}`}
+              alt={`Flag of ${nationality}`}
             />
           )}
           <p>
@@ -173,7 +182,9 @@ function BookingDataBox({ booking }) {
             {formatCurrency(totalPrice)}
 
             {hasBreakfast &&
-              ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(extrasPrice)} breakfast)`}
+              ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
+                extrasPrice
+              )} breakfast)`}
           </DataItem>
 
           <p>{isPaid ? 'Paid' : 'Will pay at property'}</p>
