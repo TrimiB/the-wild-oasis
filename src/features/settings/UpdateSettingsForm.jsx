@@ -1,5 +1,5 @@
-import { useSettings } from './useSettings';
 import { useUpdateSetting } from './useUpdateSetting';
+import { useSettings } from './useSettings';
 
 import Spinner from '../../ui/Spinner';
 import Form from '../../ui/Form';
@@ -9,7 +9,12 @@ import Input from '../../ui/Input';
 function UpdateSettingsForm() {
   const {
     isLoading,
-    settings: { minBookingLength, maxBookingLength, maxGuestsPerBooking, breakfastPrice } = {},
+    settings: {
+      minBookingLength,
+      maxBookingLength,
+      maxGuestsPerBooking,
+      breakfastPrice,
+    } = {},
   } = useSettings();
 
   const { isUpdating, updateSetting } = useUpdateSetting();
