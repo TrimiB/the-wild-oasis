@@ -15,6 +15,9 @@ import { useMoveBack } from '../../hooks/useMoveBack';
 import { useNavigate } from 'react-router-dom';
 import { HiArrowUpOnSquare } from 'react-icons/hi2';
 import useCheckout from '../check-in-out/useCheckout';
+import { useDeleteBooking } from './useDeleteBooking';
+import ConfirmDelete from '../../ui/ConfirmDelete';
+import Modal from '../../ui/Modal';
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -26,7 +29,7 @@ function BookingDetail() {
   const navigate = useNavigate();
   const { booking, isLoading } = useBooking();
   const { checkout, isCheckingOut } = useCheckout();
-
+  const { isDeleting, deleteBooking } = useDeleteBooking();
   const moveBack = useMoveBack();
 
   if (isLoading) return <Spinner />;
@@ -66,6 +69,27 @@ function BookingDetail() {
             Check out
           </Button>
         )}
+
+        <Modal>
+          <Modal.Open opens='delete'>
+            <Button variation='danger'>Delete</Button>
+          </Modal.Open>
+
+          <Modal.Window name='delete'>
+            <ConfirmDelete
+              resourceName={`bookingId: ${bookingId}`}
+              disabled={isDeleting}
+              onConfirm={() =>
+                deleteBooking(bookingId, {
+                  /**
+                   * @param {Object} options - Additional options for the deletion operation.
+                   * @param {function} options.onSettled - A callback function to be executed after the deletion operation has settled, regardless of success or failure.
+                   */
+                  onSettled: () => navigate(-1),
+                })
+              }></ConfirmDelete>
+          </Modal.Window>
+        </Modal>
 
         <Button
           variation='secondary'
