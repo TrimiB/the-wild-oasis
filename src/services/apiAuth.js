@@ -8,8 +8,6 @@ export async function login({ email, password }) {
 
   if (error) throw new Error('Error logging in:', error.message);
 
-  console.log(data);
-
   return data;
 }
 
@@ -29,4 +27,9 @@ export async function getCurrentUser() {
   if (error) throw new Error('Error logging in:', error.message);
 
   return data?.user;
+}
+
+export function logout() {
+  const { error } = supabase.auth.signOut();
+  if (error) throw new Error('Error logging out:', error.message);
 }
