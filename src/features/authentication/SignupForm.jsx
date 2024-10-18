@@ -3,24 +3,33 @@ import Button from '../../ui/Button';
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
+import SpinnerMini from '../../ui/SpinnerMini';
+import { useSignUp } from './useSignUp';
 
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
+  const { signup, isCreatingUser } = useSignUp();
   const {
     register,
     formState: { errors },
     handleSubmit,
     getValues,
+    reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(errors.passwordConfirm.message);
+  const onSubmithandler = ({ fullName, email, password }) => {
+    console.log(fullName, email, password);
+    signup(
+      { fullName, email, password },
+      {
+        onSettled: () => reset(),
+      }
+    );
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmithandler)}>
       <FormRow
         labelText='Full name'
         errorMessage={errors?.fullName?.message}>
@@ -31,6 +40,7 @@ function SignupForm() {
             required: 'This field is required',
           })}
           autoComplete='full name'
+          disabled={isCreatingUser}
         />
       </FormRow>
 
@@ -48,6 +58,7 @@ function SignupForm() {
             },
           })}
           autoComplete='email'
+          disabled={isCreatingUser}
         />
       </FormRow>
 
@@ -65,6 +76,7 @@ function SignupForm() {
             },
           })}
           autoComplete='password'
+          disabled={isCreatingUser}
         />
       </FormRow>
 
@@ -83,6 +95,7 @@ function SignupForm() {
             },
           })}
           autoComplete='repeat-password'
+          disabled={isCreatingUser}
         />
       </FormRow>
 
@@ -90,10 +103,13 @@ function SignupForm() {
         {/* type is an HTML attribute! */}
         <Button
           variation='secondary'
-          type='reset'>
+          type='reset'
+          disabled={isCreatingUser}>
           Cancel
         </Button>
-        <Button>Create new user</Button>
+        <Button disabled={isCreatingUser}>
+          {isCreatingUser ? <SpinnerMini /> : 'Create new user'}
+        </Button>
       </FormRow>
     </Form>
   );
