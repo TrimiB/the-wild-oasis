@@ -54,7 +54,15 @@ function CabinRow({ cabin }) {
   const { isCreating, createCabin } = useCreateCabin();
   const { isDeleting, deleteCabin } = useDeleteCabin();
 
-  const { id: cabinID, name, maxCapacity, regularPrice, discount, image, description } = cabin;
+  const {
+    id: cabinID,
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    image,
+    description,
+  } = cabin;
 
   function handleDuplicate() {
     createCabin({
@@ -73,14 +81,21 @@ function CabinRow({ cabin }) {
       <Cabin>{name}</Cabin>
       <div>Fits up to {maxCapacity} guests</div>
       <Price>{formatCurrency(regularPrice)}</Price>
-      {discount ? <Discount>{formatCurrency(discount)}</Discount> : <span>&mdash;</span>}
+      {discount ? (
+        <Discount>{formatCurrency(discount)}</Discount>
+      ) : (
+        <span>&mdash;</span>
+      )}
       <div>
         <Modal>
           <Menus.Menu>
             <Menus.Toggle id={cabinID} />
 
             <Menus.List id={cabinID}>
-              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+              <Menus.Button
+                icon={<HiSquare2Stack />}
+                onClick={handleDuplicate}
+                disabled={isCreating}>
                 Duplicate
               </Menus.Button>
 
