@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-import { useForm } from 'react-hook-form';
-
-import Input from './Input';
-
 const StyledFormRow = styled.div`
   display: grid;
   align-items: center;
